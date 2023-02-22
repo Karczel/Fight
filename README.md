@@ -1,2 +1,2 @@
 # Fight
-From my Sequence Diagram
+From my Sequence Diagram Assignment
