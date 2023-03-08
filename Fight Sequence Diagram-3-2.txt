@@ -1,0 +1,180 @@
+title Fight
+participant Athlete
+participant Action
+participant Dodge
+participant Guard
+
+participant Attack
+participant Legwork
+
+
+Athlete -->Action:Fight?
+opt yes
+
+Athlete -->Action:[if Fight == true] create
+end
+loop stamina < 10 or enemy.hp > 0
+Action->Action:EyeInput()
+
+//Dodge
+alt Dodge
+alt right (your side)
+alt head
+note right of Action: later will incorporate whether which move is possible from distance, stamina
+note right of Action:Damage system will be established after this Subnission in my free time
+note right of Action:On auto play, action will choose random chance to choose different moves for the same input
+note right of Action: For now, the string outputs will act as Athlete's animation
+Action->Dodge:dodge(head right)
+Dodge -->Action:"duck"
+else torso
+Action->Dodge:dodge(torso right side)
+Dodge -->Action:"dodge right"
+else leg
+Action->Dodge:dodge(leg right)
+Dodge -->Action:"dodge right"
+else uppercut
+Action->Dodge: dodge(uppercut right)
+Dodge -->Action:"back up right"
+end // end moves
+
+else left (your side)
+alt head
+Action->Dodge:dodge(left head)
+Dodge -->Action:"duck"
+else stomach
+Action->Dodge:dodge(left stomach)
+Dodge -->Action:"dodge left"
+else leg
+Action->Dodge:dodge(left leg)
+Dodge -->Action:"dodge left"
+else uppercut
+Action->Dodge:dodge(left uppercut)
+Dodge -->Action:"back up left"
+end //end moves
+
+end //end directions
+
+//Guard
+else Guard (Defense and distance < 5)
+alt right (your side)
+alt head
+Action->Guard:guard(right head)
+Guard -->Action:"block"
+else stomach
+Action->Guard:guard(right stomach)
+Guard -->Action:"block"
+else leg
+Action->Guard:guard(right leg)
+Guard -->Action:"block"
+else uppercut
+Action->Guard:guard(right uppercut)
+Guard -->Action:"block"
+end //end moves
+
+else left (your side)
+alt head
+Action->Guard:guard(left head)
+Guard -->Action:"block"
+else stomach
+Action->Guard:guard(left stomach)
+Guard -->Action:"block"
+else leg
+Action->Guard:guard(left leg)
+Guard -->Action:"block"
+else uppercut
+Action->Guard:guard(left uppercut)
+Guard -->Action:"block"
+end //end moves
+
+end //end direction
+
+//Attack
+else Attack
+alt right (your side)
+alt head
+Action->Attack:hook(right)
+Attack -->Action:"right hook"
+Action->Attack:highkick(right)
+Attack -->Action:"right highkick"
+else stomach
+Action->Attack:punch(right stomach side)
+Attack -->Action:"right side punch"
+else shoulders
+Action->Attack:punch(right shoulder)
+Attack -->Action:"right shoulder punch"
+else leg
+Action->Attack:kick(right)
+Attack -->Action:"right low kick"
+else uppercut
+Action->Attack:uppercut(right)
+Attack -->Action:"right uppercut"
+end //end moves
+
+else left (your side)
+alt head
+Action->Attack:hook(left)
+Attack -->Action:"left hook"
+Action->Attack:highkick(left)
+Attack -->Action:"left highkick"
+else stomach
+Action->Attack:punch(left stomach side)
+Attack -->Action:"left side punch"
+else shoulders
+Action->Attack:punch(right shoulder)
+Attack -->Action:"right shoulder punch"
+else leg
+Action->Attack:kick(left)
+Attack -->Action:"left low kick"
+else uppercut
+Action->Attack:uppercut(left)
+Attack -->Action:"left uppercut"
+end //end moves
+
+end //end direction
+
+//Legwork
+else Legwork
+alt far
+alt right (your side)
+Action ->Legwork: approach(distance-5)
+Legwork -->Action:"walk forward x m"
+
+else left
+Action ->Legwork: approach(distance-5)
+Legwork -->Action:"walk forward x m"
+
+else middle
+Action->Legwork:approach(distance-5)
+Legwork -->Action:"walk forward x m"
+
+end //end direction
+
+else close
+alt right (your side)
+Action ->Legwork: recede(distance-5)
+Legwork -->Action:"walk backward x m"
+
+else left
+Action ->Legwork: recede(distance-5)
+Legwork -->Action:"walk backward x m"
+
+else middle
+Action->Legwork: recede(distance-5)
+Legwork -->Action:"walk backward x m"
+
+
+end //end direction
+
+end //end distance
+
+end //end alt Actions
+
+end //end loop
+Action -->Athlete:rest()
+destroy Action
+destroy Dodge
+destroy Guard
+destroy Attack
+destroy Legwork
+
+destroyafter Athlete
