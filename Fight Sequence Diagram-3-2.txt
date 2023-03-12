@@ -1,6 +1,6 @@
 title Fight
 participant Athlete
-participant Action
+participant "<Abstract>\nAction" as Action
 participant Dodge
 participant Guard
 
@@ -11,7 +11,7 @@ participant Legwork
 Athlete -->Action:Fight?
 opt yes
 
-Athlete -->Action:[if Fight == true] create
+Athlete -->Action:[if Fight == true]
 end
 loop stamina < 10 or enemy.hp > 0
 Action->Action:EyeInput()
@@ -21,7 +21,7 @@ alt Dodge
 alt right (your side)
 alt head
 note right of Action: later will incorporate whether which move is possible from distance, stamina
-note right of Action:Damage system will be established after this Subnission in my free time
+note right of Action:Damage system will be established after this Submission in my free time
 note right of Action:On auto play, action will choose random chance to choose different moves for the same input
 note right of Action: For now, the string outputs will act as Athlete's animation
 Action->Dodge:dodge(head right)
